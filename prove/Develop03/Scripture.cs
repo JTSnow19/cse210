@@ -39,7 +39,8 @@ public class Scripture
         return displayT;
     }
 
-    public bool IsCompletelyHidden()
+    public bool IsCompletelyHidden() //I misunderstood this piece, but considering how my system resets hidden/shown words I'm not certain if this check is great
+    // the randomness is generated every single time and each word has a 40% chance to be hidden, not perfectly of course as the system cascades down the list
     {
         foreach (Word item in _words){
             item.Hide();

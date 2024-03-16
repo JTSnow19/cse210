@@ -14,7 +14,7 @@ class Program
         //problem myself. I UNDERSTAND that this is a valueble (valubal? Valubul? good thing im not an english major) method to learn encapsulation but it
         //does little to quell my frustration.
 
-
+        int randomW = 3; 
         string input = "";
         while (input!= "quit"){
             Console.WriteLine("Would you like a random scripture? Or to quit?");
@@ -37,8 +37,10 @@ class Program
             int indexNumber = randomGenerator.Next(0, 3);
 
             if (input!="quit"){
-                randomS[indexNumber].HideRandomWords(3);
+                randomS[indexNumber].HideRandomWords(randomW);
                 Console.WriteLine(randomS[indexNumber].GetDisplayText());
+                randomW +=1; // due to my misunderstanding I figured a simple increase will work, plus the randomness of each scripture adds difficulty
+                //I bet it's possible to write a seperate program that adds every single line in all books and then the increase could be overkill
             }
 
             else {
