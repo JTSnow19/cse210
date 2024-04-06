@@ -1,5 +1,7 @@
 public class gameRandom :Game{
+    private list<string> _weaknesses;
 
+    public gameRandom
     public static int RandomNumber()
     {
         Random random = new Random();
@@ -14,4 +16,6 @@ public class gameRandom :Game{
 
         return pokeOptions;
     }
+    public list<string> Random(Opponent){}
+	public list<string> SelectTeam(){} //pick a team of 6 pokemon for maximum type coverage!
 }
