@@ -6,7 +6,7 @@ using System.Linq;
 
 class typeCalc
 {
-    static Dictionary<string, List<string>> typeChartDefense(string filename)
+    public Dictionary<string, List<string>> typeChartDefense(string filename)
     {
         Dictionary<string, List<string>> typeDefense = new Dictionary<string, List<string>>();
         using (var csvReader = new StreamReader(filename))
@@ -23,7 +23,7 @@ class typeCalc
         return typeDefense;
     }
 
-    static Dictionary<string, List<string>> typeChartOffense(string filename, Dictionary<string, List<string>> typeDefense)
+    public Dictionary<string, List<string>> typeChartOffense(string filename, Dictionary<string, List<string>> typeDefense)
     {
         Dictionary<string, List<string>> typeOffense = new Dictionary<string, List<string>>();
         int keyCount = 0;
@@ -56,7 +56,7 @@ class typeCalc
     }
 
 
-    static List<string> cleanedData(string[] data)
+    public List<string> cleanedData(string[] data)
     {
         List<string> useful = new List<string>();
         int itemCount = 0;
@@ -138,7 +138,11 @@ class typeCalc
     static Dictionary<string, string[]> retriveMons()
     {
         // I think I will be moving this code, or repurposing it
+
+
         throw new NotImplementedException();
+
+
     }
 
     static List<string> weaknessList(Dictionary<string, List<string>> typeOffense, Dictionary<string, List<string>> typeDefense, string type)
