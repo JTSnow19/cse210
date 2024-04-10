@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-class typeCalc
+public class typeCalc
 {
     public Dictionary<string, List<string>> typeChartDefense(string filename)
     {
@@ -118,8 +118,8 @@ class typeCalc
             string type2 = selectedPokemon[2];
             string pokemon = selectedPokemon[0];
 
-            List<string> typeR = weaknessList(typeOffense, typeDefense, type1);
-            List<string> typeR2 = weaknessList(typeOffense, typeDefense, type2);
+            List<string> typeR = WeaknessList(typeOffense, typeDefense, type1);
+            List<string> typeR2 = WeaknessList(typeOffense, typeDefense, type2);
 
             var (immune, resist_05, neutral_damage, double_damage, resist_25, quad_damage) = typeRelation(typeR, typeR2, typeDefense);
 
@@ -145,7 +145,7 @@ class typeCalc
 
     }
 
-    static List<string> weaknessList(Dictionary<string, List<string>> typeOffense, Dictionary<string, List<string>> typeDefense, string type)
+    public List<string> WeaknessList(Dictionary<string, List<string>> typeOffense, Dictionary<string, List<string>> typeDefense, string type)
     {
         return typeOffense[type];
     }
