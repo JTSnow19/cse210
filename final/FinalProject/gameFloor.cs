@@ -19,4 +19,7 @@ public class GameFloor{
             IncreaseFloor();
         }
     }
+    public void ClimbProgress(){
+        Console.WriteLine($"Floor: {_floor}||| Room: {_room}/{_roomCap}");
+    }
 }

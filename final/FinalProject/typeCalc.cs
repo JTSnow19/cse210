@@ -102,55 +102,15 @@ public class typeCalc
         Random random = new Random();
         return random.Next(1, 893);
     }
-    public void pokeDexInfo(string[] args)
-    {
-        Dictionary<string, List<string>> typeDefense = typeChartDefense("typeChart.csv");
-        Dictionary<string, List<string>> typeOffense = typeChartOffense("typeChart.csv", typeDefense);
-
-        int number = RandomNumber();
-        Dictionary<string, string[]> pokeDict = retriveMons();
-        string numberReturn = number.ToString();
-        if (pokeDict.ContainsKey(numberReturn))
-        {
-            string[] selectedPokemon = pokeDict[numberReturn];
-            Console.WriteLine(selectedPokemon[0]); // Print the Pokemon name
-            string type1 = selectedPokemon[1];
-            string type2 = selectedPokemon[2];
-            string pokemon = selectedPokemon[0];
-
-            List<string> typeR = WeaknessList(typeOffense, typeDefense, type1);
-            List<string> typeR2 = WeaknessList(typeOffense, typeDefense, type2);
-
-            var (immune, resist_05, neutral_damage, double_damage, resist_25, quad_damage) = typeRelation(typeR, typeR2, typeDefense);
-
-            Console.WriteLine($"For the type combo of {type1.ToUpper()} and {type2.ToUpper()}:");
-            Console.WriteLine($"Immune to: {string.Join(", ", immune)}");
-            Console.WriteLine($"Takes double damage from: {string.Join(", ", double_damage)}");
-            Console.WriteLine($"Takes quadruple damage from {string.Join(", ", quad_damage)}");
-            Console.WriteLine($"Takes neutral damage from: {string.Join(", ", neutral_damage)}");
-            Console.WriteLine($"Resists: {string.Join(", ", resist_05)}");
-            Console.WriteLine($"Heavily Resists: {string.Join(", ", resist_25)}");
-        }
-    }
 
 
-
-    static Dictionary<string, string[]> retriveMons()
-    {
-        // I think I will be moving this code, or repurposing it
-
-
-        throw new NotImplementedException();
-
-
-    }
 
     public List<string> WeaknessList(Dictionary<string, List<string>> typeOffense, Dictionary<string, List<string>> typeDefense, string type)
     {
         return typeOffense[type];
     }
 
-    public static (List<string>, List<string>, List<string>, List<string>, List<string>, List<string>) typeRelation(List<string> typeR, List<string> typeR2, Dictionary<string, List<string>> typeDefense)
+    public static List<string> TypeRelation(List<string> typeR, List<string> typeR2, Dictionary<string, List<string>> typeDefense)
     {
         List<string> immune = new List<string>();
         List<string> resist_05 = new List<string>();
@@ -158,6 +118,7 @@ public class typeCalc
         List<string> double_damage = new List<string>();
         List<string> resist_25 = new List<string>();
         List<string> quad_damage = new List<string>();
+        List<string> mergeWeakness = new List<string>();
 
         foreach (var type in typeR)
         {
@@ -208,109 +169,37 @@ public class typeCalc
                     break;
             }
         }
-
-        return (immune, resist_05, neutral_damage, double_damage, resist_25, quad_damage);
+        mergeWeakness.AddRange(quad_damage);
+        mergeWeakness.AddRange(double_damage); //I would like to apologive for the improper naming schemas, here old converted code and all that
+        return mergeWeakness;
     }
-    } //current end
+     //current end
 
-//gonna have to rewrite a bunch...
-//    public List<string> WeaknessList(Dictionary<string, List<string> offense, List<string> defense, string typeInput>)
-//    {
-//        List<string> typeRelations = new List<string>();
-//        typeInput = typeInput.ToUpper();
-//        if (defense.Contains(typeInput))
-//        {
-//            int typeIndex = defense.IndexOf(typeInput);
-//
-//            foreach (KeyValuePair<string, List<string>> item in offense)
-//            {
-//                string relation = item.Value[typeIndex];
-//                typeRelations.Add(relation);
-//            }
-//        }
-//
-//        return typeRelations;
-////    }
-//
-//    public List< (List<string>, List<string>, List<string>, List<string>, List<string>, List<string>)> TypeRelation(List<string> tp1, List<string> tp2, List<string> typeList)
-//    {
-//        List<string> relation25x = new List<string>(); // the specifications aren't completely needed, but they allow for flexibility and reusability in the future
-//        List<string> relation05x = new List<string>();
-//        List<string> relation1x = new List<string>();
-//        List<string> relation2x = new List<string>();
-//        List<string> relation4x = new List<string>();
-//        List<string> relation0x = new List<string>();
-//        int iC = 0;
-//        while (iC != 18)
-//        {
-//            if (tp2.Count == 0)
-//            {
-//                if (tp1[iC] == "0x")
-//                {
-//                    relation0x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "0.5x")
-//                {
-//                    relation05x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "1x")
-//                {
-//                    relation1x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "2x")
-//                {
-//                    relation2x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//            }
-//            else
-//            {
-//                if (tp1[iC] == "0x" || tp2[iC] == "0x")
-//                {
-//                    relation0x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "0.5x" && tp2[iC] == "0.5x")
-//                {
-//                    relation25x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "1x" && tp2[iC] == "1x")
-//                {
-//                    relation1x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "2x" && tp2[iC] == "2x")
-//                {
-//                    relation4x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "0.5x" && tp2[iC] == "1x")
-//                {
-//                    relation05x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "2x" && tp2[iC] == "1x")
-//                {
-//                    relation2x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else if (tp1[iC] == "2x" && tp2[iC] == "0.5x")
-//                {
-//                    relation1x.Add(typeList[iC]);
-//                    iC++;
-//                }
-//                else
-//                {
-//                    (tp1[iC], tp2[iC]) = (tp2[iC], tp1[iC]); // swaps the list items so I don't have to rewrite the entire thing twice
-//                }
-//            }
-//        }
-//
-//        return [relation0x, relation05x, relation1x, relation2x, relation25x, relation4x];
-//    }
+    public bool Outcome(Dictionary<string, List<string>> playerTeam, string chosenMon,List<string> opponent){
+       //string chosenMon=SelectedForBattle();
+        Dictionary<string, List<string>> typeDefense = typeChartDefense("typeChart.csv");
+        Dictionary<string, List<string>> typeOffense = typeChartOffense("typeChart.csv", typeDefense);
+       List<string> opponentWeakness = WeaknessList(typeOffense,typeDefense,opponent[1]);
+       List<string> opponentWeakness2 = WeaknessList(typeOffense,typeDefense,opponent[2]);
+       List<string> relations = TypeRelation(opponentWeakness, opponentWeakness2, typeDefense); //it seems that there is some leanency with how it calculates but its pretty fun
+        if (playerTeam.ContainsKey(chosenMon)){
+            List<string> hitsEffective = playerTeam[chosenMon];
 
+            
+            foreach (var item in hitsEffective.GetRange(1, 2))
+                {
+                    if (relations.Contains(item))
+                    {
+                        return false;
+                    }
+                }
+        }
+        
+        return true;
+        }
+            
+            
+            
+            
+    }
 
