@@ -46,4 +46,9 @@ public class Game
         //theSelectedPokemon --;
         return theSelectedPokemon;
     }
+    public int GameOver(){
+        Console.WriteLine("You are out of usable pokemon!");
+        Console.WriteLine("You black out.");
+        return 3;
+    }
 }
